@@ -12,7 +12,7 @@
               <p class="card-text">{{ object.content}}</p>
               <p class="card-text">Создан: {{ object.created_at}}</p>
 
-               <p class="card-text">{{ object.views }}</p>
+               <p class="card-text">количество просмотров: {{ object.views }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a class="btn btn-primary" href="{% url 'catalog:posts' %}" role="button">Вернуться</a>
