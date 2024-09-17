@@ -1,0 +1,36 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Наш Блог</h1>
+    <p>
+         <a class="btn btn-primary" href="{% url 'catalog:post_create' %}" role="button">Создать пост</a>
+    </p>
+</div>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-start">
+            {% for object in object_list %}
+            <div class="card mb-4 me-3" style="width: 60rem;">
+                <img src="{{ object.preview | media_filter }}" class="card-img-top" style="object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h4 class="card-title">{{ object.header }}</h4>
+                  <p class="card-text">{{ object.content | truncatechars:100}}</p>
+                   <p class="card-text">{{ object.created_at}}</p>
+                    <small class="text-body-secondary">{{ object.views }}$</small>
+                    <div class="mt-auto">
+                        <a class="btn btn-primary" href="{% url 'catalog:post_detail' object.pk %}" role="button">Посмотреть</a>
+                        <a class="btn btn-primary" href="{% url 'catalog:post_update' object.pk %}" role="button">Редактировать</a>
+                        <a class="btn btn-primary" href="{% url 'catalog:post_delete' object.pk %}" role="button">Удалить</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+    {% endblock %}

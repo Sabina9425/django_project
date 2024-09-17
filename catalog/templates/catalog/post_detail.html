@@ -1,0 +1,27 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="{{ object.preview | media_filter}}">
+            <div class="card-body">
+              <h4 class="card-title">{{ object.header }}</h4>
+              <p class="card-text">{{ object.content}}</p>
+              <p class="card-text">Создан: {{ object.created_at}}</p>
+
+               <p class="card-text">{{ object.views }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a class="btn btn-primary" href="{% url 'catalog:posts' %}" role="button">Вернуться</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

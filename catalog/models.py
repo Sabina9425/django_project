@@ -32,3 +32,22 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Post(models.Model):
+    header = models.CharField(max_length=50, help_text='Введите заголовок поста')
+    slug = models.CharField(max_length=100, help_text="Введите slug")
+    content = models.TextField(max_length=500, help_text='Введите заголовок поста')
+    preview = models.ImageField(upload_to='posts/preview', blank=True, null=True, verbose_name='Превью',
+                                help_text='Загрузите превью')
+    created_at = models.DateField(verbose_name='Дата создания продукта', auto_now_add=True)
+    published = models.BooleanField(verbose_name="Признак публикации", default=False)
+    views = models.IntegerField(verbose_name="Количество просмотров", default=0)
+
+    class Meta:
+        verbose_name = "Пост"
+        verbose_name_plural = "Посты"
+        ordering = ['created_at', 'views']
+
+    def __str__(self):
+        return self.header
