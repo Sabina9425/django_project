@@ -55,8 +55,8 @@ class Post(models.Model):
 
 class Version(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, verbose_name="Продукт",
-                                help_text="Введите продукт", related_name="версии", null=True, blank=True)
-    version_number = models.IntegerField(max_length=50, help_text='Введите номер версии')
+                                help_text="Введите продукт", related_name="versions", null=True, blank=True)
+    version_number = models.IntegerField(help_text='Введите номер версии')
     version_name = models.CharField(max_length=50, help_text='Введите название версии')
     is_current_version = models.BooleanField(verbose_name="Признак текущей версии", default=False)
 

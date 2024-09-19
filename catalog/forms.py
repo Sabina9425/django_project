@@ -1,6 +1,16 @@
-from django.forms import ModelForm, forms
+from django.forms import ModelForm, forms, BooleanField
 
-from catalog.models import Product
+from catalog.models import Product, Version
+
+
+class StyleFormMixIn:
+    def __init__(self, *args, **kwargs):
+        super().__init__(self, args, kwargs)
+        for field_name, field in self.fields.items():
+            if isinstance(field, BooleanField):
+                field.widget.attrs['class'] = "form-check-input"
+            else:
+                field.widget.attrs['class'] = "form-control"
 
 
 def check_cleaned_data(cleaned_data):
@@ -23,4 +33,10 @@ class ProductForm(ModelForm):
 
     class Meta:
         model = Product
+        fields = "__all__"
+
+
+class VersionForm(ModelForm):
+    class Meta:
+        model = Version
         fields = "__all__"
