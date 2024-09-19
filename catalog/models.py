@@ -51,3 +51,19 @@ class Post(models.Model):
 
     def __str__(self):
         return self.header
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, verbose_name="Продукт",
+                                help_text="Введите продукт", related_name="версии", null=True, blank=True)
+    version_number = models.IntegerField(max_length=50, help_text='Введите номер версии')
+    version_name = models.CharField(max_length=50, help_text='Введите название версии')
+    is_current_version = models.BooleanField(verbose_name="Признак текущей версии", default=False)
+
+    class Meta:
+        verbose_name = "Версия"
+        verbose_name_plural = "Версии"
+        ordering = ['is_current_version', 'version_number']
+
+    def __str__(self):
+        return self.version_name
