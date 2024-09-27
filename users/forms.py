@@ -10,3 +10,5 @@ class UserRegistrationForm(StyleFormMixIn, UserCreationForm):
         fields = ("email", "password1", "password2")
 
 
+
+
