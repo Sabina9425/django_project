@@ -34,7 +34,14 @@ class ProductForm(ModelForm):
     class Meta:
         model = Product
         fields = "__all__"
-        exclude =("owner",)
+        exclude = ("owner", "is_published")
+
+
+class ProductModeratorForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ("description", "is_published", "category")
+        exclude = ("owner",)
 
 
 class VersionForm(ModelForm):
