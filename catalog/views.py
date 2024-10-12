@@ -7,7 +7,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
-from catalog.models import Product, Post, Version
+from catalog.models import Product, Post, Version, Category
 
 
 class ProductListView(ListView):
@@ -45,6 +45,7 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
         product.save()
         return super().form_valid(form)
 
+
 class ProductUpdateView(UpdateView, LoginRequiredMixin):
     model = Product
     form_class = ProductForm
@@ -74,7 +75,8 @@ class ProductUpdateView(UpdateView, LoginRequiredMixin):
         user = self.request.user
         if user == self.object.owner:
             return ProductForm
-        if user.has_perm("catalog.can_edit_category") and user.has_perm("catalog.can_edit_publish") and user.has_perm("catalog.can_edit_description"):
+        if user.has_perm("catalog.can_edit_category") and user.has_perm("catalog.can_edit_publish") and user.has_perm(
+                "catalog.can_edit_description"):
             return ProductModeratorForm
         raise PermissionDenied
 
@@ -128,3 +130,32 @@ class PostUpdateView(UpdateView):
 class PostDeleteView(DeleteView):
     model = Post
     success_url = reverse_lazy('catalog:posts')
+
+
+class CategoryListView(ListView):
+    model = Category
+
+
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ("name", "description")
+    success_url = reverse_lazy('catalog:categories')
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_category = form.save(commit=False)
+            new_category.slug = slugify(new_category.name)
+            new_category.save()
+
+        return super().form_valid(form)
+
+
+class CategoryUpdateView(UpdateView, LoginRequiredMixin):
+    model = Category
+    fields = ("name", "description")
+    success_url = reverse_lazy('catalog:categories')
+
+
+class CategoryDeleteView(DeleteView, LoginRequiredMixin):
+    model = Category
+    success_url = reverse_lazy('catalog:categories')

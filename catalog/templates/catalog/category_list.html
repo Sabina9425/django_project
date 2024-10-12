@@ -1,0 +1,37 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Каталог категорий</h1>
+    <p class="lead">Здесь вы можете найти все категории нашего магазина</p>
+    {% if user.is_authenticated %}
+    <p>
+        <a class="btn btn-primary" href="{% url 'catalog:category_create' %}" role="button">Создать категорию</a>
+    </p>
+    {% endif %}
+</div>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-start">
+            {% for object in object_list %}
+            <div class="card mb-4 me-3" style="width: 18rem;">
+                <div class="card-body d-flex flex-column">
+                    <h4 class="card-title">{{ object.name }}</h4>
+                    <p class="card-text">{{ object.description | truncatechars:100 }}</p>
+                    {% if user.is_authenticated %}
+                    <div class="mt-auto">
+
+                        <a class="btn btn-primary" href="{% url 'catalog:category_update' object.slug %}" role="button">Редактировать</a>
+
+                        <a class="btn btn-primary" href="{% url 'catalog:category_delete' object.slug %}" role="button">Удалить</a>
+                    </div>
+                      {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

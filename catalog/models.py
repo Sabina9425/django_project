@@ -6,6 +6,7 @@ from users.models import User
 class Category(models.Model):
     name = models.CharField(max_length=50, help_text='Введите имя категории')
     description = models.TextField(max_length=100, help_text="Введите описание категории")
+    slug = models.CharField(max_length=100, help_text="Введите slug", default="empty")
 
     class Meta:
         verbose_name = "Категория"
