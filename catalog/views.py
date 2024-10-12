@@ -8,6 +8,7 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, Post, Version, Category
+from catalog.services import get_categories_from_cache, get_products_from_cache
 
 
 class ProductListView(ListView):
@@ -27,6 +28,9 @@ class ProductListView(ListView):
         # Add the active versions to the context
         context['active_versions'] = active_versions
         return context
+
+    def get_queryset(self):
+        return get_products_from_cache()
 
 
 class ProductDetailView(DetailView):
@@ -134,6 +138,9 @@ class PostDeleteView(DeleteView):
 
 class CategoryListView(ListView):
     model = Category
+
+    def get_queryset(self):
+        return get_categories_from_cache()
 
 
 class CategoryCreateView(CreateView):
